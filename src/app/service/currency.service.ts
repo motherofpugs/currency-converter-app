@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ExchangeRatesResponse } from '../models/exchangerate';
 import { ConversionResponse } from '../models/conversion';
+import { CurrencySymbolsResponse } from '../models/symbols';
 
 @Injectable({
   providedIn: 'root',
@@ -28,5 +29,11 @@ export class CurrencyService {
     const endpoint = 'convert';
     const url = `${this.apiUrl}${endpoint}?access_key=${this.accessKey}&from=${from}&to=${to}&amount=${amount}`;
     return this.httpClient.jsonp<ConversionResponse>(url, 'callback');
+  }
+
+  getCurrencySymbols(): Observable<CurrencySymbolsResponse> {
+    const url = `${this.apiUrl}${this.symbolsEndpoint}?access_key=${this.accessKey}`;
+    const httpUrl = url.replace('https://', 'http://');
+    return this.httpClient.get<CurrencySymbolsResponse>(httpUrl);
   }
 }
