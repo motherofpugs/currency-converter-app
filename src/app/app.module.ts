@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { CurrencyConverterComponent } from './component/currency-converter/currency-converter.component';
 import { CurrencySelectionComponent } from './component/currency-selection/currency-selection.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -14,7 +14,13 @@ import { HttpClientModule } from '@angular/common/http';
     CurrencyConverterComponent,
     CurrencySelectionComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    HttpClientJsonpModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

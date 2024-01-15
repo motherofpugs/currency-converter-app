@@ -1,8 +1,9 @@
+import { ConversionResponse } from './../models/conversion';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { ExchangeRatesResponse } from '../models/exchangerate';
-import { ConversionResponse } from '../models/conversion';
+
 import { CurrencySymbolsResponse } from '../models/symbols';
 
 @Injectable({
@@ -18,7 +19,8 @@ export class CurrencyService {
 
   getLatestExchangeRates(): Observable<ExchangeRatesResponse> {
     const url = `${this.apiUrl}${this.endpoint}?access_key=${this.accessKey}`;
-    return this.httpClient.jsonp<ExchangeRatesResponse>(url, 'callback');
+    const httpUrl = url.replace('https://', 'http://');
+    return this.httpClient.jsonp<ExchangeRatesResponse>(httpUrl, 'callback');
   }
 
   convertCurrency(
@@ -28,7 +30,12 @@ export class CurrencyService {
   ): Observable<ConversionResponse> {
     const endpoint = 'convert';
     const url = `${this.apiUrl}${endpoint}?access_key=${this.accessKey}&from=${from}&to=${to}&amount=${amount}`;
-    return this.httpClient.jsonp<ConversionResponse>(url, 'callback');
+    const httpUrl = url.replace('https://', 'http://');
+    return this.httpClient.jsonp<ConversionResponse>(httpUrl, 'callback').pipe(
+      tap((result) => {
+        console.log(result);
+      })
+    );
   }
 
   getCurrencySymbols(): Observable<CurrencySymbolsResponse> {

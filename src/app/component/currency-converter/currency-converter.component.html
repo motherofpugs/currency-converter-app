@@ -3,12 +3,19 @@
     <form class="row">
       <div class="mb-3 col-12">
         <label class="form-label">Amount</label>
-        <input type="number" class="form-control" />
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="amount"
+          name="amount"
+        />
       </div>
-      <app-currency-selection></app-currency-selection>
-      <button class="btn btn-primary">Convert</button>
-      <div class="container-fluid bg-primary mt-3">
-        <p></p>
+      <app-currency-selection #currencySelection></app-currency-selection>
+      <button class="btn btn-primary" (click)="convertCurrency()">
+        Convert
+      </button>
+      <div class="container-fluid bg-primary mt-3 text-center">
+        <p class="text-white fs-3 mt-3">{{ convertedCurr }}</p>
       </div>
     </form>
   </div>
